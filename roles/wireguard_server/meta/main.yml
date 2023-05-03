@@ -1,0 +1,9 @@
+galaxy_info:
+  author: Jakub Veverka
+  description: Ansible role to setup and enable WireGuard on RHEL 9
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: RHEL
+      versions:
+        - 9
