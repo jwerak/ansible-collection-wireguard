@@ -1,6 +1,6 @@
 ---
-- name: Restart WireGuard
-  ansible.builtin.systemd:
-    name: wg-quick@wg0
-    state: restarted
-    daemon_reload: true
+- name: Reload WireGuard connection
+  ansible.builtin.shell:
+    cmd: >-
+      nmcli connection load /etc/NetworkManager/system-connections/{{ wireguard_connection_name }}.nmconnection &&
+      nmcli device reapply {{ wireguard_connection_name }}

@@ -6,22 +6,15 @@
     state: present
     enablerepo: "powertools"
 
-- name: Ensure WireGuard service is enabled and started
-  ansible.builtin.systemd:
-    name: wg-quick@wg0
-    enabled: true
-    state: started
-    daemon_reload: true
-
-- name: Deploy WireGuard configuration
+- name: Ensure wireguard configuration file is present
   ansible.builtin.template:
-    src: wg0.conf.j2
-    dest: /etc/wireguard/wg0.conf
+    src: wg0.nmconnection.j2
+    dest: /etc/NetworkManager/system-connections/{{ wireguard_connection_name }}.nmconnection
+    mode: "0600"
     owner: root
     group: root
-    mode: "0600"
   notify:
-    - Restart WireGuard
+    - Reload WireGuard connection
 
 - name: Configure firewall to allow WireGuard traffic
   ansible.posix.firewalld:
@@ -30,9 +23,3 @@
     state: enabled
     immediate: true
     zone: "{{ wireguard_firewall_zone }}"
-
-- name: Set SELinux to allow WireGuard to function
-  ansible.posix.seboolean:
-    name: daemons_use_tty
-    state: true
-    persistent: true

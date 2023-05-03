@@ -1,10 +1,11 @@
 ---
 # defaults file for wireguard-server
 wireguard_firewall_zone: public
-wireguard_address: "10.0.0.1/24"
+wireguard_autoconnect: true
+wireguard_address: "10.1.1.1/24"
 wireguard_private_key: "your_private_key_here"
 wireguard_listen_port: 51820
+wireguard_connection_name: wg0
 wireguard_peers:
-  - public_key: "peer1_public_key"
-    allowed_ips: "10.0.0.2/32"
-    endpoint: "peer1.example.com:51820"
+  - public-key: "peer1_public_key"
+    allowed-ips: "10.1.1.0/24"
